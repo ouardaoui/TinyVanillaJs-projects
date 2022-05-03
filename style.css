@@ -1,0 +1,29 @@
+*{
+  box-sizing: border-box;
+}
+
+.progressbar
+{
+  position: relative;
+  height:  50px ;
+  width: 400px;
+  border: 1px solid black;
+}
+
+.progressbar-value
+{
+  height : 100%;
+  width: 100%;
+  position: absolute;
+  color : #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.progressbar-full
+{
+  height: 100%;
+  transition: width  0.5s;
+}
