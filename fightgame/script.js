@@ -33,7 +33,8 @@ class Sprit {
     attack()
     {
         c.fillStyle = "yellow";
-        c.fillRect(this.attX + this.x,this.y,this.attWidth,50);        
+        c.fillRect(this.attX + this.x,this.y,this.
+            attWidth,50);        
     }
 
     move()
@@ -127,6 +128,22 @@ let  player = new Sprit(playerProp);
 player.draw()
 let  enemy = new Sprit(enemyProp)
 enemy.draw()
+let i = 0;
+let j = 0;
+// check collition beetwon player and enemy
+const collision = (player, enemy) => {
+    if((player.x  + player.attWidth  >= enemy.x ) 
+    && (player.x +player.attWidth <= enemy.x + enemy.width)
+    && (player.y <= enemy.y + enemy.height )
+    && (player.y + 50  >= enemy.y))
+    {
+        if(player.att)
+            i++;
+        if(enemy.att)
+            j++;
+    }
+    console.log(i,j);
+}
 
 function animate()
 {
@@ -135,6 +152,10 @@ function animate()
    c.fillRect(0,0,canvas.width,canvas.height)
         player.move();
         enemy.move();
+        if(player.att || enemy.att)
+        {
+            collision(player,enemy)
+        }
 }
 animate()
 
@@ -165,7 +186,11 @@ window.addEventListener("keydown", (e) => {
         if(e.key == player.keyUp)
             player.up = false;
         if(e.key == player.keyAtt)
+        {
+            setTimeout(() => {
             player.att = false;
+            }, 100)
+        }
     })
 }
 eventHandler(player)
