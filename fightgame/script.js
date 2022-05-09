@@ -4,7 +4,7 @@ canvas.width = 1024
 let c = canvas.getContext('2d')
 c.fillRect(0,0,canvas.width,canvas.height)
 class Sprit {
-    constructor({position,format,color,delta,pressed,key})
+    constructor({position,format,color,delta,pressed,key,attack})
     {
         this.x = position.x;
         this.y = position.y;
@@ -15,19 +15,34 @@ class Sprit {
         this.dy = delta.dy;
         this.right  = pressed.right
         this.lift = pressed.lift
+        this.att = pressed.att
         this.keyRight = key.right
         this.keyLeft = key.left
         this.keyUp = key.up
+        this.keyAtt = key.att
+        this.attX = attack.x
+        this.attWidth = attack.width        
     }
+
     draw()
     {
         c.fillStyle = this.color ;
         c.fillRect(this.x, this.y,this.width,this.height)
     }
+
+    attack()
+    {
+        c.fillStyle = "yellow";
+        c.fillRect(this.attX + this.x,this.y,this.attWidth,50);        
+    }
+
     move()
     {
-        
         this.draw();
+            if(this.att)
+            {
+            this.attack(); 
+            }
             if(this.right && this.x + this.dx + this.width < canvas.width)
             {
                 this.x += this.dx;
@@ -64,12 +79,18 @@ playerProp  = {
     {
         right : false,
         left : false,
+        att : false,
         up : false
     },
     key : {
         right : 'ArrowRight',
         left : "ArrowLeft",
-        up : "ArrowUp"
+        up : "ArrowUp",
+        att : " "
+    },
+    attack : {
+        x : 0,
+        width : 100
     }
 }
 enemyProp  = {
@@ -88,12 +109,18 @@ enemyProp  = {
     {
         right : false,
         left : false,
-        up : false
+        up : false,
+        att : false
     },
     key : {
         right : "d",
         left : "a",
         up :"w",
+        att : "s"
+    },
+    attack : {
+        x : 50,
+        width : -100
     }
 }
 let  player = new Sprit(playerProp);
@@ -123,6 +150,8 @@ window.addEventListener("keydown", (e) => {
         }
         if(e.key == player.keyUp)
             player.dy = -20;
+        if(e.key == player. keyAtt)
+            player.att = true;
     })
     window.addEventListener("keyup",(e) => {
         if(e.key == player.keyRight)
@@ -135,6 +164,8 @@ window.addEventListener("keydown", (e) => {
         }
         if(e.key == player.keyUp)
             player.up = false;
+        if(e.key == player.keyAtt)
+            player.att = false;
     })
 }
 eventHandler(player)
