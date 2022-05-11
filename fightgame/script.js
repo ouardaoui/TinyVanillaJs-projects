@@ -1,7 +1,14 @@
 const canvas = document.querySelector('canvas')
 canvas.height = 576
 canvas.width = 1024
+const enemyHp =  document.querySelector('.enemy')
+const playerHp =  document.querySelector('.player')
+let time = document.querySelector('.time')
 let c = canvas.getContext('2d')
+
+time.textContent = 60;
+
+
 c.fillRect(0,0,canvas.width,canvas.height)
 class Sprit {
     constructor({position,format,color,delta,pressed,key,attack})
@@ -67,7 +74,7 @@ playerProp  = {
     format,
     position : 
     {
-        x :  0,
+        x :  256 - 50,
         y : 0,
     },
     delta : 
@@ -98,7 +105,7 @@ enemyProp  = {
     format,
     position : 
     {
-        x :100, 
+        x :256 *3, 
         y : 100,
     },
     color : "Blue",
@@ -137,13 +144,38 @@ const collision = (player, enemy) => {
     && (player.y <= enemy.y + enemy.height )
     && (player.y + 50  >= enemy.y))
     {
-        if(player.att)
-            i++;
+        if(player.att && i <= 100 && j <= 100)
+        {
+            i += 1;
+            playerHp.style.width = i + "%";
+        }
         if(enemy.att)
-            j++;
+        {
+            j += 1;
+            enemyHp.style.width = j + "%";
+        }
     }
     console.log(i,j);
 }
+
+const a = setInterval(function(){
+    time.textContent -= 1;
+    if(i >= 100 || j>= 100 )
+        time.textContent = 0;
+    if(time.textContent == 0)
+    {
+        if(i > j ){
+        console.log("player won" );
+        clearInterval(a);
+        }
+        else if(i < j ){
+        console.log('enemy won');
+        clearInterval(a);
+        } 
+        else
+            time.textContent = 20;
+    }
+},1000);
 
 function animate()
 {
@@ -157,6 +189,7 @@ function animate()
             collision(player,enemy)
         }
 }
+
 animate()
 
 const eventHandler = (player) => {
