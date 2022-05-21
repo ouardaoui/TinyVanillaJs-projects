@@ -1,0 +1,49 @@
+*::after::before{
+    box-sizing: border-box;
+}
+
+body{
+    margin : 0; 
+    overflow: hidden;
+}
+
+.containte{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height : 100vh;
+    flex-direction: column;
+}
+.containter{
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+    margin : 2rem;
+    position: relative;
+}
+
+.circle{
+    border : 3px solid hsl(200, 40%, 48%);
+    padding: 1rem;
+    border-radius: 50% ;
+    background-color: white;
+}
+.circle.active
+{
+    background-color: hsl(200,100%,50%);
+}
+
+.progress-bar{
+    background-color: hsl(200,100%,50%);
+    height : .5rem;
+    width : 33%;
+    position: absolute;
+    top : 1.5rem;
+    z-index: -1;
+}
+
+.progress-bar::before
+{
+    content: '55';
+    background-color: #aaa; 
+}
